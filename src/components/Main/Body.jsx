@@ -50,7 +50,7 @@ const Body = () => {
         const updated = [...prev];
         updated[updated.length - 1] = {
           ...updated[updated.length - 1],
-          // aiResponse: "AI Response for: " + text,
+           aiResponse: "AI Response for: " + text,
           loading: false,
         };
         return updated;
@@ -172,10 +172,11 @@ const Body = () => {
                           <button
                             onClick={() => handleSummarize(index)}
                             className="button2"
-                            disabled={msg.aiResponse.split(/\s+/).length < 150}
+                            disabled={!msg.aiResponse || msg.aiResponse.split(/\s+/).length < 150}
                           >
                             Summarize
                           </button>
+
 
                           <select
                             className="button1"

@@ -1,9 +1,9 @@
 .body {
     min-height: 100vh;
-  flex: 1;
-  position: relative;
-  padding-bottom: 15vh;
-  
+    flex: 1;
+    position: relative;
+    padding-bottom: 15vh;
+
     background: rgb(32, 30, 34);
     /* background-image: radial-gradient(circle at center,
             rgba(81, 0, 148, 0.1) 0%,
@@ -68,12 +68,24 @@
 
 button:disabled {
     background-color: #ccc;
-    cursor: not-allowed;
+
     opacity: 0.6;
     color: grey;
     border: grey;
-  }
-  
+}
+
+.error-message {
+    background: red;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    margin: 10px 0;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+
 
 
 .body-container {
@@ -255,8 +267,8 @@ button:disabled {
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     padding: 20px;
-    margin-bottom:8rem;
-    
+    margin-bottom: 8rem;
+
 }
 
 
@@ -330,10 +342,10 @@ button:disabled {
     width: 20px;
     height: 20px;
     border: 3px solid rgba(255, 255, 255, 0.3);
-   
+
     border-radius: 50%;
     background-color: #ffffff;
- 
+
     animation: wave 1.5s ease-in-out infinite;
     margin-right: 10px;
 }
@@ -402,7 +414,7 @@ button:disabled {
 @media screen and (max-width:450px) {
 
     .body .cards {
-     
+
         margin-left: 2rem;
     }
 
