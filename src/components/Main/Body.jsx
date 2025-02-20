@@ -12,7 +12,6 @@ const Body = () => {
     setText,
     translateResultData,
     summarizeText,
-    clearChat,
     showResult,
     setShowResult,
     availableLanguages,
@@ -50,7 +49,7 @@ const Body = () => {
         const updated = [...prev];
         updated[updated.length - 1] = {
           ...updated[updated.length - 1],
-           aiResponse: "AI Response for: " + text,
+          aiResponse: "AI Response for: " + text,
           loading: false,
         };
         return updated;
@@ -108,15 +107,21 @@ const Body = () => {
       return updated;
     });
   };
+  const handleClearChat = () => {
+    setMessages([]);
+    setShowResult(false);
+    setText("");
+  };
 
   return (
     <div className="body">
       <div className="nav">
         <img src={user} alt="User" />
 
-        <button className="button1" onClick={clearChat}>
+        <button className="button1" onClick={handleClearChat}>
           Clear Chat
         </button>
+
 
       </div>
       <div className="body-container">
@@ -163,6 +168,7 @@ const Body = () => {
 
                       <div className="bottom-data">
                         <p>
+                          {/* <img src={user} alt="" className="user"/> */}
                           {msg.detectedLanguage && (
                             <span className="lang-tag">({msg.detectedLanguage})</span>
                           )}
@@ -225,11 +231,20 @@ const Body = () => {
         )}
         <div className="body-bottom">
           <div className="search-box">
-            <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Enter a prompt here" />
+            <textarea
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              placeholder="Enter a prompt here"
+            />
+
             <div className="output-button">
-              <div className="button1">
-                <FontAwesomeIcon icon={faMicrophone} />
-              </div>
+             
               {text && (
                 <div className="button1">
                   <img onClick={handleSend} src={send} alt="Send" />

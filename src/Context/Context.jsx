@@ -9,7 +9,7 @@ const ContextProvider = ({ children }) => {
   const [prompt, setPrompt] = useState("");
   const [summaryButton, setSummaryButton] = useState("");
   const [showResult, setShowResult] = useState(false);
-  const [resultData, setResultData] = useState([]); // Initialize as an array
+  const [resultData, setResultData] = useState([]); 
   const [prevPrompt, setPrevPrompt] = useState([]);
   const [loading, setLoading] = useState(false);
   const [detector, setDetector] = useState(null);
@@ -17,7 +17,7 @@ const ContextProvider = ({ children }) => {
   const [translatedText, setTranslatedText] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("pt");
   const [showLanguages, setShowLanguages] = useState(false);
-  const [summarizedText, setSummarizedText] = useState(""); // State for summarized text
+  const [summarizedText, setSummarizedText] = useState(""); 
 
   const availableLanguages = [
     { code: "en", name: "English" },
@@ -131,7 +131,7 @@ const ContextProvider = ({ children }) => {
       }
   
       const summary = await summarizer.summarize(textToSummarize);
-      setSummarizedText(summary); // Store summarized text
+      setSummarizedText(summary); 
       return summary;
     } catch (error) {
       console.error("Summarization failed:", error);
@@ -152,19 +152,14 @@ const ContextProvider = ({ children }) => {
       setResultData((prev) => [...prev, sentText]);
       setPrevPrompt((prev) => [...prev, sentText]);
   
-      // Translate and store the result correctly
+ 
       const translationResult = await translateResultData(sentText);
-      setTranslatedText((prev) => ({ ...prev, ...translationResult })); // ✅ Merge new translation with previous ones
+      setTranslatedText((prev) => ({ ...prev, ...translationResult })); 
     }, 5000);
   };
   
   
-  const clearChat = () => {
-    setResultData([]);
-    setTranslatedText("");
-    setSummarizedText("");
-    setPrevPrompt([]);
-  };
+ 
 
   const contextValue = {
     text,
@@ -195,7 +190,6 @@ const ContextProvider = ({ children }) => {
     setTranslatedText,
     summarizeText, 
     summarizedText, 
-    clearChat, 
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

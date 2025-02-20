@@ -11,6 +11,12 @@ const Sidebar = () => {
     //     setRecentPrompt(prompt)
     //     onSent(prompt)
     //   }
+    const handleClearChat = () => {
+        setMessages([]);
+        setShowResult(false);
+        setText("");
+      };
+    
 
     const [toggle, setToggle] = useState(false)
 
@@ -20,7 +26,7 @@ const Sidebar = () => {
                 <img src={menu} alt="" className='menu' onClick={() => setToggle(prev => !prev)} />
                 <div className="new-summary">
                     <img src={plus} alt="" />
-                    {toggle ? <p>New Summary</p> : null}
+                    {toggle ? <p onClick={handleClearChat}>New chat</p> : null}
 
                 </div>
 
