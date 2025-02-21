@@ -9,7 +9,7 @@ const ContextProvider = ({ children }) => {
   const [prompt, setPrompt] = useState("");
   const [summaryButton, setSummaryButton] = useState("");
   const [showResult, setShowResult] = useState(false);
-  const [resultData, setResultData] = useState([]); 
+  const [resultData, setResultData] = useState([]);
   const [prevPrompt, setPrevPrompt] = useState([]);
   const [loading, setLoading] = useState(false);
   const [detector, setDetector] = useState(null);
@@ -17,7 +17,7 @@ const ContextProvider = ({ children }) => {
   const [translatedText, setTranslatedText] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("pt");
   const [showLanguages, setShowLanguages] = useState(false);
-  const [summarizedText, setSummarizedText] = useState(""); 
+  const [summarizedText, setSummarizedText] = useState("");
 
   const availableLanguages = [
     { code: "en", name: "English" },
@@ -97,7 +97,6 @@ const ContextProvider = ({ children }) => {
     }
   };
 
-
   useEffect(() => {
     if (translatedText) {
       console.log("Translated text updated:", translatedText);
@@ -112,13 +111,13 @@ const ContextProvider = ({ children }) => {
         format: "markdown",
         length: "medium",
       };
-  
+
       const available = (await self.ai.summarizer.capabilities()).available;
       if (available === "no") {
         console.log("The Summarizer API isn't usable.");
         return;
       }
-  
+
       let summarizer;
       if (available === "readily") {
         summarizer = await self.ai.summarizer.create(options);
@@ -129,37 +128,36 @@ const ContextProvider = ({ children }) => {
         });
         await summarizer.ready;
       }
-  
+
       const summary = await summarizer.summarize(textToSummarize);
-      setSummarizedText(summary); 
+      setSummarizedText(summary);
       return summary;
     } catch (error) {
       console.error("Summarization failed:", error);
     }
   };
-  
 
   const onSent = async () => {
     if (!text.trim()) return;
-  
+
+    setRecents((prev) => [text, ...prev]);
+
     const sentText = text;
-    setText("");
     setLoading(true);
     setShowResult(true);
-  
+
     setTimeout(async () => {
-      setLoading(false);
-      setResultData((prev) => [...prev, sentText]);
-      setPrevPrompt((prev) => [...prev, sentText]);
-  
- 
-      const translationResult = await translateResultData(sentText);
-      setTranslatedText((prev) => ({ ...prev, ...translationResult })); 
-    }, 5000);
-  };
-  
-  
- 
+        setLoading(false);
+        const summarizedUserText = await summarizeText(sentText);
+        setSummarizedText(summarizedUserText);
+
+        setResultData((prev) => [
+            ...prev,
+            { type: "summary", content: summarizedUserText }
+        ]);
+    }, 1000);
+};
+
 
   const contextValue = {
     text,
@@ -186,10 +184,10 @@ const ContextProvider = ({ children }) => {
     showLanguages,
     setShowLanguages,
     availableLanguages,
-    translatedText, 
+    translatedText,
     setTranslatedText,
-    summarizeText, 
-    summarizedText, 
+    summarizeText,
+    summarizedText,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

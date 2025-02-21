@@ -1,53 +1,49 @@
-import React, { useContext, useState } from 'react'
-import './sidebar.css'
-import menu from '../../assets/menu_icon.png'
-import plus from '../../assets/plus_icon.png'
-import { Context } from '../../Context/Context'
+import React, { useContext, useState } from 'react';
+import './sidebar.css';
+import menu from '../../assets/menu_icon.png';
+import plus from '../../assets/plus_icon.png';
+import { Context } from '../../Context/Context';
 
 const Sidebar = () => {
-    // const { prevPrompt, text } = useContext(Context)
+    const { recents, setShowResult, setText } = useContext(Context);
+    const [toggle, setToggle] = useState(false);
 
-    // const loadPrompt = (text) => {
-    //     setRecentPrompt(prompt)
-    //     onSent(prompt)
-    //   }
     const handleClearChat = () => {
-        setMessages([]);
         setShowResult(false);
         setText("");
-      };
-    
+        console.log("Chat Cleared");
+    };
 
-    const [toggle, setToggle] = useState(false)
+    console.log("Recents: ", recents);
 
     return (
         <div className='sidebar'>
             <div className="top">
-                <img src={menu} alt="" className='menu' onClick={() => setToggle(prev => !prev)} />
-                <div className="new-summary">
-                    <img src={plus} alt="" />
-                    {toggle ? <p onClick={handleClearChat}>New chat</p> : null}
-
+                <img src={menu} alt="Menu" className='menu' onClick={() => setToggle(prev => !prev)} />
+                <div className="new-summary" onClick={handleClearChat}>
+                    <img src={plus} alt="New Chat" />
+                    {toggle && <p>New chat</p>}
                 </div>
 
-                {toggle ?
+                {toggle && (
                     <div className="recent">
                         <p className="recent-title">Recent</p>
-
-                        <div className="recent-entry">
-                        {/* <p>{(text || prevPrompt).slice(0, 18) + "....."}</p> */}
-
-
-                        </div>
-
-
-
-
-                    </div> : null
-                }
+                        <ul>
+                            {recents.length === 0 ? (
+                                <p>No recent messages</p>
+                            ) : (
+                                recents.map((message, index) => (
+                                    <li key={index} onClick={() => setText(message)}>
+                                        {message.slice(0, 28)}
+                                    </li>
+                                ))
+                            )}
+                        </ul>
+                    </div>
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Sidebar
+export default Sidebar;

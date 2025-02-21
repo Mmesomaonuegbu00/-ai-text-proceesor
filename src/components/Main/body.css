@@ -21,9 +21,37 @@
     color: #585858;
 }
 
-.body .nav img {
+.body .nav h2 {
+    color: #9598c5;
+}
+
+.body .summary .user {
+    width: 50px;
+    border-radius: 50%;
+    margin-left: -20px;
+    margin-top: 3px;
+}
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.input-user {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    align-self: flex-end;
+    margin: 10px;
+}
+
+.input-user .user {
     width: 40px;
-    border-radius: 50px;
+    height: 40px;
+    border-radius: 50%;
+    align-self: flex-end;
+
 }
 
 .output-button {
@@ -55,16 +83,14 @@
 
 }
 
-
-.button2 select {
-    appearance: none;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #7b26dd;
+.button1:hover {
+    background: rgb(149, 152, 197, 0.5);
 }
+.button2:hover {
+    background: rgb(149, 152, 197, 0.5);
+    color: #fff;
+}
+
 
 button:disabled {
     background-color: #ccc;
@@ -148,17 +174,22 @@ button:disabled {
 }
 
 .chats .user-prompts {
+
     align-self: flex-end;
     text-align: justify;
     line-height: 2;
     max-width: 100%;
     padding: 10px;
     background-color: rgba(226, 215, 240, 0.1);
-    border-radius: 30px 1px 30px 30px;
+    border-radius: 10px 1px 10px 10px;
     font-weight: 300;
     color: rgb(202, 200, 200);
-    margin: 10px;
+
 }
+
+
+
+
 
 .chats .ai-ans {
     align-self: flex-start;
@@ -168,8 +199,7 @@ button:disabled {
     padding: 10px;
     background-color: #7b26dd;
     color: #ffffff;
-    border-radius: 1px 30px 30px 30px;
-    margin: 10px;
+    border-radius: 10px 1px 10px 10px;
 }
 
 .detected-language {

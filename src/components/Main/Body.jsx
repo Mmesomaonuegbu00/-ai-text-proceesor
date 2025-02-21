@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import "./body.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
-import user from "../../assets/user_icon.png";
+import bot from "../../assets/bot.png";
 import send from "../../assets/send_icon.png";
 import { Context } from "../../Context/Context";
 
@@ -10,6 +10,7 @@ const Body = () => {
   const {
     text,
     setText,
+    onSent,
     translateResultData,
     summarizeText,
     showResult,
@@ -43,13 +44,14 @@ const Body = () => {
     setMessages((prev) => [...prev, newMessage]);
     setText("");
     setShowResult(true);
+    onSent();
 
     setTimeout(() => {
       setMessages((prev) => {
         const updated = [...prev];
         updated[updated.length - 1] = {
           ...updated[updated.length - 1],
-          aiResponse: "AI Response for: " + text,
+          aiResponse: "AI Response for: " + newMessage.userText,
           loading: false,
         };
         return updated;
@@ -76,7 +78,7 @@ const Body = () => {
   };
 
   const handleSummarize = async (index) => {
-    if (messages[index].aiResponse.split(/\s+/).length < 150) return;
+    if (messages[index].aiResponse.length < 150) return;
 
     setLoadingIndex(index);
     const summarizedText = await summarizeText(messages[index].aiResponse);
@@ -87,6 +89,7 @@ const Body = () => {
       return updated;
     });
   };
+
 
   const handleLanguageSelection = async (index, selectedLanguage) => {
     if (!selectedLanguage) return;
@@ -116,7 +119,7 @@ const Body = () => {
   return (
     <div className="body">
       <div className="nav">
-        <img src={user} alt="User" />
+        <h2>TextAi</h2>
 
         <button className="button1" onClick={handleClearChat}>
           Clear Chat
@@ -163,58 +166,68 @@ const Body = () => {
               <div className="chats">
                 {messages.map((msg, index) => (
                   <div key={index}>
-                    <div className="user-prompts">
-                      <p>{msg.userText}</p>
+                    <div className="input-user">
+                      {/* <img src={user} alt="User" className="user" /> */}
+                      <div className="user-prompts">
 
-                      <div className="bottom-data">
-                        <p>
-                          {/* <img src={user} alt="" className="user"/> */}
-                          {msg.detectedLanguage && (
-                            <span className="lang-tag">({msg.detectedLanguage})</span>
-                          )}
-                        </p>
+                        <p>{msg.userText}</p>
 
-                        <div className="output-button">
-                          <button
-                            onClick={() => handleSummarize(index)}
-                            className="button2"
-                            disabled={!msg.aiResponse || msg.aiResponse.split(/\s+/).length < 150}
-                          >
-                            Summarize
-                          </button>
+                        <div className="bottom-data">
+                          <p>
+
+                            {msg.detectedLanguage && (
+                              <span className="lang-tag">({msg.detectedLanguage})</span>
+                            )}
+                          </p>
+
+                          <div className="output-button">
+                            <button
+                              onClick={() => handleSummarize(index)}
+                              className="button2"
+                              disabled={!msg.aiResponse || msg.aiResponse.length < 150}
+                            >
+                              Summarize
+                            </button>
 
 
-                          <select
-                            className="button1"
-                            onChange={(e) => handleLanguageSelection(index, e.target.value)}
-                          >
-                            <option value="" hidden>Translate</option>
-                            {availableLanguages.map((lang) => (
-                              <option key={lang.code} value={lang.code}>
-                                {lang.name}
-                              </option>
-                            ))}
-                          </select>
 
-                          <p className="time">{msg.time}</p>
+                            <select
+                              className="button1"
+                              onChange={(e) => handleLanguageSelection(index, e.target.value)}
+                            >
+                              <option value="" hidden>Translate</option>
+                              {availableLanguages.map((lang) => (
+                                <option key={lang.code} value={lang.code}>
+                                  {lang.name}
+                                </option>
+                              ))}
+                            </select>
+
+                            <p className="time">{msg.time}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                     {/* <p className="ai-ans">{msg.aiResponse}</p> */}
                     {msg.translation && Object.keys(msg.translation).length > 0 && (
-                      <div className="ai-ans">
-                        {Object.entries(msg.translation).map(([lang, trans]) => (
-                          <p key={lang}>{trans || "Translation not available"}</p>
-                        ))}
-
+                      <div className="summary">
+                        <img src={bot} alt="User" className="user" />
+                        <div className="ai-ans">
+                          {Object.entries(msg.translation).map(([lang, trans]) => (
+                            <p key={lang}>{trans || "Translation not available"}</p>
+                          ))}
+                        </div>
                       </div>
                     )}
 
                     {msg.summary && (
-                      <p className="ai-ans">
-                        Summarized: {msg.summary} <br />
-                        <span className="time">{msg.time}</span>
-                      </p>
+                      <div className="summary">
+                        <img src={bot} alt="User" className="user" />
+                        <p className="ai-ans">
+                          Summarized: {msg.summary} <br />
+                          <span className="time">{msg.time}</span>
+                        </p>
+                      </div>
                     )}
 
                     {loadingIndex === index && (
@@ -244,7 +257,7 @@ const Body = () => {
             />
 
             <div className="output-button">
-             
+
               {text && (
                 <div className="button1">
                   <img onClick={handleSend} src={send} alt="Send" />
