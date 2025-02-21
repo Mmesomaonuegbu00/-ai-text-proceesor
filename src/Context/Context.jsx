@@ -83,7 +83,7 @@ const ContextProvider = ({ children }) => {
   }, [text, detector]);
 
   const translateResultData = async (textToTranslate, language) => {
-    if (!textToTranslate || !language) return "Translation failed. Please try again.";
+    if (!textToTranslate || !language) return "Browser doesnt support this, please use your pc.";
     try {
       const translator = await self.ai.translator.create({
         sourceLanguage: "en",
@@ -93,7 +93,7 @@ const ContextProvider = ({ children }) => {
       return translated;
     } catch (error) {
       console.error("Translation failed:", error);
-      return "Translation failed. Please try again.";
+      return "Sorry...... We dont have the tranlation for this please try other lang";
     }
   };
 
