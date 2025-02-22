@@ -190,7 +190,11 @@ button:disabled {
 
 
 
-
+.translation {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border-bottom: 2px solid whitesmoke;
+  }
 
 .chats .ai-ans {
     align-self: flex-start;
@@ -199,7 +203,7 @@ button:disabled {
     max-width: 100%;
     padding: 10px;
     background-color: #7b26dd;
-    color: #ffffff;
+    color: #d1cfcf;
     border-radius: 1px 10px 10px 10px;
 }
 

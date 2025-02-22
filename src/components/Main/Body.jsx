@@ -214,9 +214,12 @@ const Body = () => {
                         <img src={bot} alt="User" className="user" />
                         <div className="ai-ans">
                           {Object.entries(msg.translation).map(([lang, trans]) => (
-                            <p key={lang}>{trans || "Translation not available"}</p>
+                            <p key={lang} className="translation">
+                              <strong>{lang}: </strong> {trans || "Translation not available"}
+                            </p>
                           ))}
                         </div>
+
                       </div>
                     )}
 
