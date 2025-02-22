@@ -118,7 +118,7 @@ button:disabled {
     max-width: 1400px;
     margin: auto;
     width: 100%;
-
+  
 }
 
 .body .greet {
@@ -136,8 +136,8 @@ button:disabled {
 }
 
 .result {
-    padding: 0px 5px;
-    max-height: 70vh;
+    padding: 10px 15px;
+    max-height: 65vh;
     overflow-y: scroll;
     width: 100%;
     word-break: break-word;
@@ -163,6 +163,7 @@ button:disabled {
     max-width: 1400px;
     padding: 0px 20px;
     margin: auto;
+    
 
 }
 
@@ -439,6 +440,10 @@ button:disabled {
         font-size: 16px;
     }
 
+    .result {
+        max-height: 60vh;
+    }
+
 }
 
 @media screen and (max-width:450px) {
@@ -506,7 +511,6 @@ button:disabled {
     }
 
     .result .chats .user-prompts {
-
         line-height: normal;
         font-size: 14x;
     }
